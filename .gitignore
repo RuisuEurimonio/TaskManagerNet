@@ -1,0 +1,75 @@
+# Archivos de usuario de Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos de compilación
+[Dd]ebug/
+[Rr]elease/
+[x64]/
+[x86]/
+[Aa][Rr][Mm]/
+bin/
+obj/
+out/
+publish/
+*.dll
+*.exe
+*.pdb
+*.mdb
+
+# Archivos de configuración de Visual Studio
+*.vspx
+*.vssscc
+*.vspscc
+
+# Archivos de configuración de Rider
+.idea/
+*.sln.iml
+
+# Paquetes NuGet
+*.nupkg
+*.snupkg
+packages/
+**/packages/*
+**/package.lock.json
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Archivos de entornos específicos
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
+
+# Archivos de prueba
+*.TestResults/
+TestResults/
+*.trx
+
+# Archivos de pruebas de rendimiento
+*.perf
+*.coverage
+*.coveragexml
+*.testsettings
+
+# Archivos de entorno de desarrollo
+.env
+*.dotcover
+*.dotTrace
+*.dotMemory
+*.report
+*.coverage
+
+# Otros
+*.db
+*.sqlite
+*.log
+*.bak
+*.sql
+*.userprefs
