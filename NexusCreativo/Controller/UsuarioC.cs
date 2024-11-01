@@ -31,12 +31,11 @@ namespace NexusCreativo.Controller
         {
             if(name != null && rol != null && name != "" && rol != "")
             {
-                int id = UsuarioDao.GetUsers().Count;
-                Models.Usuario newUsuario = new Models.Usuario(id+1, name, rol);
-                Boolean result = UsuarioDao.SetUsers(newUsuario);
-                if (result)
+                Models.Usuario newUsuario = new Models.Usuario(name, rol);
+                Models.Usuario result = UsuarioDao.SetUsers(newUsuario);
+                if (result != null)
                 {
-                    return newUsuario;
+                    return result;
                 }
             }
             return null;
@@ -44,9 +43,9 @@ namespace NexusCreativo.Controller
 
         public Boolean Delete(string id)
         {
-            if(id == null)
+            if(id != null || id != "")
             {
-                Boolean result = UsuarioDao.DeleteUsers(int.Parse(id));
+                UsuarioDao.DeleteUsers(int.Parse(id));
                 return true;
             }
             return false;

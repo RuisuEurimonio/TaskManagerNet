@@ -52,19 +52,20 @@ namespace NexusCreativo
                 return;
             }
             MessageBox.Show("Usuario no creado, ha sucedido un error", "Crear", MessageBoxButton.OK, MessageBoxImage.Warning);
-            CargarDatos();
         }
 
         private void Delete(object sender, RoutedEventArgs e)
         {
+            var usuarioAEliminar = UsuariosDB.FirstOrDefault(u => u.Id == int.Parse(idTxt.Text));
             Boolean result = UsuarioController.Delete(idTxt.Text);
             if (result)
             {
                 MessageBox.Show("Usuario eliminado", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
+                UsuariosDB.Remove(usuarioAEliminar);
+                CleanInputs();
                 return;
             }
             MessageBox.Show("Usuario no eliminado, ha sucedido un error", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Warning);
-            CargarDatos();
         }
 
         private void Actualizar(object sender, RoutedEventArgs e)

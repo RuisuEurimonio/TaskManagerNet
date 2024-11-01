@@ -62,9 +62,9 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Boolean SetUsers(Usuario usuario)
+        public Usuario SetUsers(Usuario usuario)
         {
-            string query = "INSERT INTO usuarios (name, rol) VALUES (@name, @rol)";
+            string query = "INSERT INTO usuarios (name, rol) VALUES (@name, @rol); SELECT LAST_INSERT_ID();";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
@@ -73,13 +73,13 @@ namespace NexusCreativo.Models.Models.DAO
                     msCommand.Parameters.AddWithValue("@rol", usuario.Rol);
 
                     msc.Open();
-                    int result = msCommand.ExecuteNonQuery();
-                    if(result > 0)
+                    object result = msCommand.ExecuteScalar();
+                    if(result != null)
                     {
-                        return true;
+                        return GetUser(Convert.ToInt32(result));
                     }
                 }
-                return false;
+                return null;
             }
         }
 
