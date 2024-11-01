@@ -62,7 +62,7 @@ namespace NexusCreativo
             {
                 MessageBox.Show("Usuario eliminado", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
                 UsuariosDB.Remove(usuarioAEliminar);
-                CleanInputs();
+                resetTable();
                 return;
             }
             MessageBox.Show("Usuario no eliminado, ha sucedido un error", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -74,10 +74,10 @@ namespace NexusCreativo
             if (result)
             {
                 MessageBox.Show("Usuario actualizado", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Information);
+                resetTable();
                 return;
             }
             MessageBox.Show("Usuario no actualizado, ha sucedido un error", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Warning);
-            CargarDatos();
         }
 
         private void openTaks(object sender, RoutedEventArgs e)
@@ -113,6 +113,16 @@ namespace NexusCreativo
             idTxt.Text = "";
             nameTxt.Text = "";
             rolTxt.Text = "";
+        }
+
+        private void resetTable()
+        {
+            UsuariosDB.Clear();
+            foreach (var item in UsuarioController.getUsers())
+            {
+                UsuariosDB.Add(item);
+            };
+            CleanInputs();
         }
 
         private void idTxt_TextChanged(object sender, TextChangedEventArgs e)
