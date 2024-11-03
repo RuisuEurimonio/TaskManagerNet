@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZstdSharp;
 
 namespace NexusCreativo.Models.Models.DAO
 {
@@ -27,7 +28,7 @@ namespace NexusCreativo.Models.Models.DAO
                         while (msdr.Read())
                         {
                             proyecto.Id = msdr.GetInt32("id");
-                            proyecto.Name = msdr.GetString("name");
+                            proyecto.Nombre = msdr.GetString("nombre");
                             proyecto.Description = msdr.GetString("descripcion");
                         }
                     }
@@ -51,8 +52,8 @@ namespace NexusCreativo.Models.Models.DAO
                         {
                             Proyecto proyecto = new Proyecto();
                             proyecto.Id = msdr.GetInt32("id");
-                            proyecto.Name = msdr.GetString("name");
-                            proyecto.Description = msdr.GetString("rol");
+                            proyecto.Nombre = msdr.GetString("Nombre");
+                            proyecto.Description = msdr.GetString("descripcion");
                             listProjects.Add(proyecto);
                         }
                     }
@@ -61,24 +62,24 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Boolean SetProjects(Proyecto proyecto)
+        public Proyecto SetProjects(Proyecto proyecto)
         {
-            string query = "INSERT INTO proyectos (name, descripcion) VALUES (@name, @descripcion)";
+            string query = "INSERT INTO proyectos (nombre, descripcion) VALUES (@nombre, @descripcion); SELECT LAST_INSERT_ID();";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@name", proyecto.Name);
+                    msCommand.Parameters.AddWithValue("@nombre", proyecto.Nombre);
                     msCommand.Parameters.AddWithValue("@descripcion", proyecto.Description);
 
                     msc.Open();
-                    int result = msCommand.ExecuteNonQuery();
-                    if (result > 0)
+                    object result = msCommand.ExecuteScalar();
+                    if (result != null)
                     {
-                        return true;
+                        return GetProject(Convert.ToInt32(result));
                     }
                 }
-                return false;
+                return null;
             }
         }
 
@@ -102,12 +103,12 @@ namespace NexusCreativo.Models.Models.DAO
 
         public Boolean UpdateProjects(Proyecto project)
         {
-            string query = "UPDATE proyectos SET name = @name, descripcion = @descripcion WHERE id = " + project.Id;
+            string query = "UPDATE proyectos SET name = @nombre, descripcion = @descripcion WHERE id = " + project.Id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@name", project.Name);
+                    msCommand.Parameters.AddWithValue("@nombre", project.Nombre);
                     msCommand.Parameters.AddWithValue("@descripcion", project.Description);
 
                     msc.Open();

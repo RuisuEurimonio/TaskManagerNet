@@ -1,11 +1,11 @@
-﻿<Window x:Class="NexusCreativo.MainWindow"
+﻿<Window x:Class="NexusCreativo.Views.Projects"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NexusCreativo"
+        xmlns:local="clr-namespace:NexusCreativo.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="458" Width="529"
+        Title="Projects" Height="458" Width="529"
         Background="#000000">
     <Window.Resources>
         <Style TargetType="Label">
@@ -33,33 +33,33 @@
             <ColumnDefinition Width="268*"/>
             <ColumnDefinition Width="251*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock HorizontalAlignment="Left" Margin="77,19,0,0" FontSize="24" FontWeight="Bold" Grid.Column="1" Height="30" VerticalAlignment="Top"> Usuarios</TextBlock>
-        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,67,0,0" Name="button3" Click="Delete" Grid.Column="1">
+        <TextBlock HorizontalAlignment="Left" Margin="77,19,0,0" FontSize="24" FontWeight="Bold" Grid.Column="1" Height="30" VerticalAlignment="Top"> Proyectos.</TextBlock>
+        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,67,0,0" Name="button3" Click="DeleteProject" Grid.Column="1">
             Eliminar
         </Button>
-        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="141,67,0,0" Name="button5" Click="Actualizar" Grid.Column="1">
+        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="141,67,0,0" Name="button5" Click="ActualizarProject" Grid.Column="1">
             Actualizar
         </Button>
-        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,102,0,0" Name="button4" Click="Create" Grid.Column="1">
+        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,102,0,0" Name="button4" Click="CreateProject" Grid.Column="1">
             Crear
         </Button>
-        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="141,102,0,0" Name="buttonClean" Click="Clean" Grid.Column="1">
+        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="141,102,0,0" Name="buttonClean" Click="CleanProjects" Grid.Column="1">
             Limpiar
         </Button>
-        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,179,0,0" Name="button8" Click="openTask" Grid.Column="1">
-            Abrir tareas
+        <Button Height="20px" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,184,0,0" Name="button8" Click="closeTask" Grid.Column="1">
+            Cerrar tareas
         </Button>
         <Label Content="ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
         <TextBox x:Name="idTxt"  Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,36,0,0" IsEnabled="False"/>
-        <Label Content="Ingrese su nombre:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,77,0,0"/>
-        <TextBox x:Name="nameTxt" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,102,0,0"/>
-        <Label Content="Ingrese su rol:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,148,0,0"/>
-        <TextBox x:Name="rolTxt" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,174,0,0"/>
-        <DataGrid ItemsSource="{Binding UsuariosDB}" AutoGenerateColumns="False" Margin="10,0,0,0" SelectionChanged="DataGrid_SelectionChanged" Height="192" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
+        <Label Content="Ingrese el proyecto:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,77,0,0"/>
+        <TextBox x:Name="projectTxt" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,102,0,0"/>
+        <Label Content="Ingrese la descripción:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,148,0,0"/>
+        <TextBox x:Name="descriptionTxt" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,174,0,0"/>
+        <DataGrid ItemsSource="{Binding ProyectosDB}" AutoGenerateColumns="False" Margin="10,0,0,0" SelectionChanged="DataGrid_SelectionChanged" Height="192" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="30" />
-                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Rol" Binding="{Binding Rol}" Width="190"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="100"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

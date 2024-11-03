@@ -43,7 +43,7 @@ namespace NexusCreativo.Models.Models.DAO
                             tarea.Proyecto = new Proyecto
                             {
                                 Id = msdr.GetInt32(msdr.GetOrdinal("proyectoId")),
-                                Name = msdr.GetString(msdr.GetOrdinal("proyectoName"))
+                                Nombre = msdr.GetString(msdr.GetOrdinal("proyectoName"))
                             };
 
                         }
@@ -80,7 +80,7 @@ namespace NexusCreativo.Models.Models.DAO
                             tarea.Proyecto = new Proyecto
                             {
                                 Id = msdr.GetInt32(msdr.GetOrdinal("proyectoId")),
-                                Name = msdr.GetString(msdr.GetOrdinal("proyectoName"))
+                                Nombre = msdr.GetString(msdr.GetOrdinal("proyectoName"))
                             };
                             listTasks.Add(tarea);
                         }

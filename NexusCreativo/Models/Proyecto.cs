@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace NexusCreativo.Models
 {
-    internal class Proyecto
+    public class Proyecto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Nombre { get; set; }
         public string Description { get; set; }
 
         public Proyecto(int id, string name, string description)
         {
             Id = id;
-            Name = name;
+            Nombre = name;
+            Description = description;
+        }
+
+        public Proyecto(string name, string description)
+        {
+            Nombre = name;
             Description = description;
         }
 

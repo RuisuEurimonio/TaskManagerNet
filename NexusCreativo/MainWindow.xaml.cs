@@ -1,6 +1,7 @@
 ﻿using NexusCreativo.Controller;
 using NexusCreativo.Models;
 using NexusCreativo.Models.Models.DAO;
+using NexusCreativo.Views;
 using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
@@ -80,11 +81,6 @@ namespace NexusCreativo
             MessageBox.Show("Usuario no actualizado, ha sucedido un error", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        private void openTaks(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("hola");
-        }
-
         private void openProjects(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("hola");
@@ -125,9 +121,11 @@ namespace NexusCreativo
             CleanInputs();
         }
 
-        private void idTxt_TextChanged(object sender, TextChangedEventArgs e)
+        private void openTask(object sender, RoutedEventArgs e)
         {
-
+            Projects projects = new Projects(this);
+            this.Hide();
+            projects.Show();
         }
     }
 }
