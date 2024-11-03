@@ -23,7 +23,7 @@ namespace NexusCreativo.Views
     public partial class Projects : Window
     {
         public MainWindow MainW { set; get; }
-        public ObservableCollection<Proyecto> ProyectoDB { set; get; }
+        public ObservableCollection<Proyecto> ProyectosDB { set; get; }
         private Controller.ProyectoC proyectoController;
 
         public Projects()
@@ -43,17 +43,17 @@ namespace NexusCreativo.Views
 
         private void CargarDatos()
         {
-            this.ProyectoDB = new ObservableCollection<Proyecto>(proyectoController.getProjects());
+            this.ProyectosDB = new ObservableCollection<Proyecto>(proyectoController.getProjects());
         }
 
         private void DeleteProject(object sender, RoutedEventArgs e)
         {
-            var proyectoAEliminar = ProyectoDB.FirstOrDefault(u => u.Id == int.Parse(idTxt.Text));
+            var proyectoAEliminar = ProyectosDB.FirstOrDefault(u => u.Id == int.Parse(idTxt.Text));
             Boolean result = proyectoController.Delete(idTxt.Text);
             if (result)
             {
                 MessageBox.Show("Proyecto eliminado", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
-                ProyectoDB.Remove(proyectoAEliminar);
+                ProyectosDB.Remove(proyectoAEliminar);
                 resetTable();
                 return;
             }
@@ -82,10 +82,10 @@ namespace NexusCreativo.Views
 
         private void resetTable()
         {
-            ProyectoDB.Clear();
+            ProyectosDB.Clear();
             foreach (var item in proyectoController.getProjects())
             {
-                ProyectoDB.Add(item);
+                ProyectosDB.Add(item);
             };
             CleanInputs();
         }
@@ -96,7 +96,7 @@ namespace NexusCreativo.Views
             if (result != null)
             {
                 MessageBox.Show("Proyecto creado", "Crear", MessageBoxButton.OK, MessageBoxImage.Information);
-                ProyectoDB.Add(result);
+                ProyectosDB.Add(result);
                 CleanInputs();
                 return;
             }
