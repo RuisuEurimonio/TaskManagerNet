@@ -90,10 +90,10 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Boolean SetTask(Proyecto usuario)
+        public Tarea SetTask(Proyecto usuario)
         {
             Tarea tarea = new Tarea();
-            string query = "INSERT INTO Tareas (name, descripcion, isCompleted, period, usuarioId, proyectoId)\r\nVALUES (@name, @descripcion, @isCompleted, @period, @usuarioId, @proyectoId)";
+            string query = "INSERT INTO Tareas (name, descripcion, isCompleted, period, usuarioId, proyectoId)\r\nVALUES (@name, @descripcion, @isCompleted, @period, @usuarioId, @proyectoId); SELECT LAST_INSERT_ID();";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
@@ -106,13 +106,13 @@ namespace NexusCreativo.Models.Models.DAO
                     msCommand.Parameters.AddWithValue("@proyectoId", tarea.Proyecto.Id);
 
                     msc.Open();
-                    int result = msCommand.ExecuteNonQuery();
-                    if (result > 0)
+                    object result = msCommand.ExecuteScalar();
+                    if (result != null)
                     {
-                        return true;
+                        return GetTarea(Convert.ToInt32(result));
                     }
                 }
-                return false;
+                return null;
             }
         }
 

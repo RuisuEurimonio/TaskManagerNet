@@ -10,7 +10,7 @@ namespace NexusCreativo.Models
     {
 
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Nombre { get; set; }
         public string Description { get; set; }
         public bool isCompleted { get; set; }
         public DateTime Period {  get; set; }
@@ -20,7 +20,7 @@ namespace NexusCreativo.Models
         public Tarea(int id, string name, string description, bool isCompleted, DateTime period, Usuario usuario, Proyecto proyecto)
         {
             Id = id;
-            Name = name;
+            Nombre = name;
             Description = description;
             this.isCompleted = isCompleted;
             Period = period;
