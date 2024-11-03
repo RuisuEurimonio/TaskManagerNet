@@ -105,13 +105,13 @@ namespace NexusCreativo.Views
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is DataGrid dataGrid && dataGrid.SelectedItem is Usuario selectedUser)
+            if (sender is DataGrid dataGrid && dataGrid.SelectedItem is Proyecto selectedProject)
             {
-                int selectedId = selectedUser.Id;
-                Proyecto usuarioSelected = proyectoController.getProjectById(selectedId.ToString());
-                idTxt.Text = usuarioSelected.Id + "";
-                projectTxt.Text = usuarioSelected.Nombre;
-                descriptionTxt.Text = usuarioSelected.Description;
+                int selectedId = selectedProject.Id;
+                Proyecto proyectSelected = proyectoController.getProjectById(selectedId.ToString());
+                idTxt.Text = proyectSelected.Id + "";
+                projectTxt.Text = proyectSelected.Nombre;
+                descriptionTxt.Text = proyectSelected.Description;
             }
         }
 

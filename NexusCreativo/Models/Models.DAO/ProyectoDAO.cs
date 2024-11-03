@@ -103,7 +103,7 @@ namespace NexusCreativo.Models.Models.DAO
 
         public Boolean UpdateProjects(Proyecto project)
         {
-            string query = "UPDATE proyectos SET name = @nombre, descripcion = @descripcion WHERE id = " + project.Id;
+            string query = "UPDATE proyectos SET nombre = @nombre, descripcion = @descripcion WHERE id = " + project.Id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
