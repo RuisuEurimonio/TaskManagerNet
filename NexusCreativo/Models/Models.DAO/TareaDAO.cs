@@ -17,10 +17,10 @@ namespace NexusCreativo.Models.Models.DAO
 
         string connectDB = "server=localhost; user=nexus; database=nexus; password=nexus; port=3307";
 
-        public Tarea GetTarea(int id)
+        public Tarea ObtenerTarea(int id)
         {
             Tarea tarea = new Tarea();
-            string query = "SELECT t.id AS tareaId, t.name AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.name AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuarioId = u.id INNER JOIN Proyectos p ON t.proyectoId = p.id WHERE t.id = @tareaId";
+            string query = "SELECT t.id AS tareaId, t.nombre AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.name AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuarioId = u.id INNER JOIN Proyectos p ON t.proyectoId = p.id WHERE t.id = @tareaId";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
@@ -31,7 +31,7 @@ namespace NexusCreativo.Models.Models.DAO
                         while (msdr.Read())
                         {
                             tarea.Id = msdr.GetInt32("id");
-                            tarea.Name = msdr.GetString("name");
+                            tarea.Nombre = msdr.GetString("nombre");
                             tarea.Description = msdr.GetString("descripcion");
                             tarea.isCompleted = msdr.GetBoolean("isCompleted");
                             tarea.Period = msdr.GetDateTime("period");
@@ -53,10 +53,10 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public List<Tarea> GetTasks()
+        public List<Tarea> ObtenerTareas()
         {
             List<Tarea> listTasks = new List<Tarea>();
-            string query = "SELECT t.id AS tareaId, t.name AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.name AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuarioId = u.id INNER JOIN Proyectos p ON t.proyectoId = p.id";
+            string query = "SELECT t.id AS tareaId, t.nombre AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.nombre AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuario_id = u.id INNER JOIN Proyectos p ON t.proyecto_id = p.id";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
@@ -67,9 +67,9 @@ namespace NexusCreativo.Models.Models.DAO
                         while (msdr.Read())
                         {
                             Tarea tarea = new Tarea();
-                            tarea.Id = msdr.GetInt32("id");
-                            tarea.Name = msdr.GetString("name");
-                            tarea.Description = msdr.GetString("descripcion");
+                            tarea.Id = msdr.GetInt32("tareaId");
+                            tarea.Nombre = msdr.GetString("tareaName");
+                            tarea.Description = msdr.GetString("tareaDescripcion");
                             tarea.isCompleted = msdr.GetBoolean("isCompleted");
                             tarea.Period = msdr.GetDateTime("period");
                             tarea.Usuario = new Usuario
@@ -90,7 +90,7 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Tarea SetTask(Proyecto usuario)
+        public Tarea CrearTarea(Tarea tareaInputs)
         {
             Tarea tarea = new Tarea();
             string query = "INSERT INTO Tareas (name, descripcion, isCompleted, period, usuarioId, proyectoId)\r\nVALUES (@name, @descripcion, @isCompleted, @period, @usuarioId, @proyectoId); SELECT LAST_INSERT_ID();";
@@ -98,25 +98,25 @@ namespace NexusCreativo.Models.Models.DAO
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@name", tarea.Name);
-                    msCommand.Parameters.AddWithValue("@descripcion", tarea.Description);
-                    msCommand.Parameters.AddWithValue("@isCompleted", tarea.isCompleted);
-                    msCommand.Parameters.AddWithValue("@period", tarea.Period);
-                    msCommand.Parameters.AddWithValue("@usuarioId", tarea.Usuario.Id); // Asumiendo que Usuario es un objeto con un ID
-                    msCommand.Parameters.AddWithValue("@proyectoId", tarea.Proyecto.Id);
+                    msCommand.Parameters.AddWithValue("@name", tareaInputs.Nombre);
+                    msCommand.Parameters.AddWithValue("@descripcion", tareaInputs.Description);
+                    msCommand.Parameters.AddWithValue("@isCompleted", tareaInputs.isCompleted);
+                    msCommand.Parameters.AddWithValue("@period", tareaInputs.Period);
+                    msCommand.Parameters.AddWithValue("@usuarioId", tareaInputs.Usuario.Id); 
+                    msCommand.Parameters.AddWithValue("@proyectoId", tareaInputs.Proyecto.Id);
 
                     msc.Open();
                     object result = msCommand.ExecuteScalar();
                     if (result != null)
                     {
-                        return GetTarea(Convert.ToInt32(result));
+                        return ObtenerTarea(Convert.ToInt32(result));
                     }
                 }
                 return null;
             }
         }
 
-        public Boolean DeleteTask(int id)
+        public Boolean EliminarTarea(int id)
         {
             string query = "DELETE FROM tareas WHERE id = " + id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
@@ -134,14 +134,14 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Boolean UpdateTaks(Tarea tarea)
+        public Boolean ActualizarTarea(Tarea tarea)
         {
-            string query = "UPDATE Tareas SET name = @name, descripcion = @descripcion, isCompleted = @isCompleted, period = @period, usuarioId = @usuarioId, proyectoId = @proyectoId WHERE id = @tareaId; ";
+            string query = "UPDATE Tareas SET nombre = @nombre, descripcion = @descripcion, isCompleted = @isCompleted, period = @period, usuarioId = @usuarioId, proyectoId = @proyectoId WHERE id = @tareaId; ";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@name", tarea.Name);
+                    msCommand.Parameters.AddWithValue("@name", tarea.Nombre);
                     msCommand.Parameters.AddWithValue("@descripcion", tarea.Description);
                     msCommand.Parameters.AddWithValue("@isCompleted", tarea.isCompleted);
                     msCommand.Parameters.AddWithValue("@period", tarea.Period);

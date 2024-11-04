@@ -107,8 +107,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\TareaC.cs" />
     <Compile Include="Views\Projects.xaml.cs">
       <DependentUpon>Projects.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tareas.xaml.cs">
+      <DependentUpon>Tareas.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +129,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Projects.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tareas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -62,5 +62,6 @@
                 <DataGridTextColumn Header="Rol" Binding="{Binding Rol}" Width="190"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Height="20px" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="141,179,0,0" x:Name="button8_Copiar" Click="openProjects" Grid.Column="1" Content="Abrir Proyectos"/>
     </Grid>
 </Window>

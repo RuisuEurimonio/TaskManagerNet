@@ -83,7 +83,9 @@ namespace NexusCreativo
 
         private void openProjects(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("hola");
+            Projects projectView = new Projects(this);
+            this.Hide();
+            projectView.Show();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -123,9 +125,9 @@ namespace NexusCreativo
 
         private void openTask(object sender, RoutedEventArgs e)
         {
-            Projects projects = new Projects(this);
+            Tareas tareas = new Tareas(this);
             this.Hide();
-            projects.Show();
+            tareas.Show();
         }
     }
 }

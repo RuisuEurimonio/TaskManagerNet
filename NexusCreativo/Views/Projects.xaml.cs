@@ -23,7 +23,7 @@ namespace NexusCreativo.Views
     public partial class Projects : Window
     {
         public MainWindow MainW { set; get; }
-        public ObservableCollection<Proyecto> ProyectosDB { set; get; }
+        public ObservableCollection<Proyecto> ProyectosDB { get; set; }
         private Controller.ProyectoC proyectoController;
 
         public Projects()
@@ -43,7 +43,7 @@ namespace NexusCreativo.Views
 
         private void CargarDatos()
         {
-            this.ProyectosDB = new ObservableCollection<Proyecto>(proyectoController.getProjects());
+            ProyectosDB = new ObservableCollection<Proyecto>(proyectoController.getProjects());
         }
 
         private void DeleteProject(object sender, RoutedEventArgs e)

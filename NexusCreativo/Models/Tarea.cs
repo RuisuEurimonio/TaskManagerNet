@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NexusCreativo.Models
 {
-    internal class Tarea
+    public class Tarea
     {
 
         public int Id { get; set; }
@@ -20,6 +20,16 @@ namespace NexusCreativo.Models
         public Tarea(int id, string name, string description, bool isCompleted, DateTime period, Usuario usuario, Proyecto proyecto)
         {
             Id = id;
+            Nombre = name;
+            Description = description;
+            this.isCompleted = isCompleted;
+            Period = period;
+            Usuario = usuario;
+            Proyecto = proyecto;
+        }
+
+        public Tarea(string name, string description, bool isCompleted, DateTime period, Usuario usuario, Proyecto proyecto)
+        {
             Nombre = name;
             Description = description;
             this.isCompleted = isCompleted;

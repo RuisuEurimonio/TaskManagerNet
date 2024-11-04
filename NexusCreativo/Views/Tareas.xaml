@@ -34,6 +34,11 @@
         </Style>
     </Window.Resources>
     <Grid Margin="0,0,10,0" Height="545" VerticalAlignment="Top" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="259*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="286*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="268*"/>
             <ColumnDefinition Width="251*"/>
@@ -55,31 +60,32 @@
             Cerrar tareas
         </Button>
         <Label Content="ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-        <TextBox x:Name="idTxt"  Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,36,0,0" IsEnabled="False"/>
+        <TextBox x:Name="idTxt"  Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,36,0,0" IsEnabled="False"/>
         <Label Content="Ingrese la tarea:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,77,0,0"/>
-        <TextBox x:Name="nombreTxt" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,102,0,0"/>
+        <TextBox x:Name="nombreTxt" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,102,0,0"/>
         <Label Content="Ingrese la descripción:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,148,0,0"/>
-        <TextBox x:Name="descripcionTxt" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,174,0,0"/>
-        <DataGrid ItemsSource="{Binding TareasDB}" AutoGenerateColumns="False" Margin="10,0,0,-26" SelectionChanged="DataGrid_SelectionChanged" Height="192" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
+        <TextBox x:Name="descripcionTxt" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,174,0,0"/>
+        <DataGrid ItemsSource="{Binding TareasDB}" AutoGenerateColumns="False" Margin="10,0,0,-26" SelectionChanged="DataGrid_SelectionChanged" Height="192" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="30" />
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="100"/>
-                <DataGridTextColumn Header="Descripcion" Binding="{Binding Descripcion}" Width="100"/>
-                <DataGridTextColumn Header="Usuario" Binding="{Binding Usuario}" Width="100"/>
-                <DataGridTextColumn Header="Proyecto" Binding="{Binding Proyecto}" Width="100"/>
-                <DataGridTextColumn Header="Estado" Binding="{Binding IsCompleted}" Width="*"/>
+                <DataGridTextColumn Header="Descripcion" Binding="{Binding Description}" Width="100"/>
+                <DataGridTextColumn Header="Usuario" Binding="{Binding Usuario.Name}" Width="100"/>
+                <DataGridTextColumn Header="Proyecto" Binding="{Binding Proyecto.Nombre}" Width="100"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding isCompleted}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Usuario:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,215,0,0"/>
-        <ComboBox x:Name="UsuarioBox"  Height="30" HorizontalAlignment="Center" VerticalAlignment="Top"
-                  ItemsSource="{Binding OpcionesUsuario}" Margin="0,241,0,0">
+        <ComboBox x:Name="UsuarioBox"  Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  DisplayMemberPath="Nombre" SelectedValuePath="Id" 
+                  ItemsSource="{Binding UsuarioDB}" Margin="9,242,0,0" Grid.RowSpan="3">
         </ComboBox>
-        <Label Content="Proyecto:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,276,0,0" RenderTransformOrigin="0.013,0.637"/>
-        <ComboBox x:Name="ProyectoBox" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top"
-                  ItemsSource="{Binding OpcionesProyecto}" Margin="0,302,0,0"/>
+        <Label Content="Proyecto:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,17,0,0" RenderTransformOrigin="0.013,0.637" Grid.Row="2"/>
+        <ComboBox x:Name="ProyectoBox" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" DisplayMemberPath="Nombre" SelectedValuePath="Id" 
+                  ItemsSource="{Binding ProyectosDB}" Margin="9,43,0,0" Grid.Row="2"/>
         <CheckBox x:Name="Estado" Content="Completado" 
-                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,348,0,0" Foreground="#F6C3D0" Height="31"/>
-        <Calendar x:Name="fechVencimiento" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,168,0,0" Grid.Column="1" Width="250"/>
+                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,89,0,0" Foreground="#F6C3D0" Height="31" Grid.Row="2"/>
+        <Calendar x:Name="fechVencimiento" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,168,0,0" Grid.Column="1" Width="250" Grid.RowSpan="3"/>
 
     </Grid>
 </Window>

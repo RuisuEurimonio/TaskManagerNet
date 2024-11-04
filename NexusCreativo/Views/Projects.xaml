@@ -47,7 +47,7 @@
             Limpiar
         </Button>
         <Button Height="20px" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,184,0,0" Name="button8" Click="closeTask" Grid.Column="1">
-            Cerrar tareas
+            Cerrar Proyectos
         </Button>
         <Label Content="ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
         <TextBox x:Name="idTxt"  Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,36,0,0" IsEnabled="False"/>
