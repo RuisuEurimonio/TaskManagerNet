@@ -29,12 +29,12 @@ namespace NexusCreativo.Controller
             return TareaDao.ObtenerTarea(int.Parse(id));
         }
 
-        public Models.Tarea Crear(string nombre, string descripcion, bool isCompleted, DateTime period, int usuarioId, int proyectoId)
+        public Models.Tarea Crear(string nombre, string descripcion, bool isCompleted, DateTime period, string usuarioId, string proyectoId)
         {
             if (nombre != null && descripcion != null && nombre != "" && descripcion != "")
             {
 
-                Models.Tarea nuevaTarea = new Models.Tarea(nombre, descripcion, isCompleted, period, UsuarioDao.GetUser(usuarioId), ProyectoDao.GetProject(proyectoId));
+                Models.Tarea nuevaTarea = new Models.Tarea(nombre, descripcion, isCompleted, period, UsuarioDao.GetUser(int.Parse(usuarioId)), ProyectoDao.GetProject(int.Parse(proyectoId)));
                 Models.Tarea result = TareaDao.CrearTarea(nuevaTarea);
                 if (result != null)
                 {

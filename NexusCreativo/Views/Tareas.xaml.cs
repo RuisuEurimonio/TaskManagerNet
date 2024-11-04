@@ -60,12 +60,12 @@ namespace NexusCreativo.Views
             Boolean result = tareaControlador.Delete(idTxt.Text);
             if (result)
             {
-                MessageBox.Show("Proyecto eliminado", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Tarea eliminada", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
                 TareasDB.Remove(tareaAEliminar);
                 resetTable();
                 return;
             }
-            MessageBox.Show("Proyecto no eliminado, ha sucedido un error", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Tarea no eliminada, ha sucedido un error", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void CleanInputs()
@@ -92,28 +92,37 @@ namespace NexusCreativo.Views
             Boolean result = tareaControlador.Actualizar(idTxt.Text, nombreTxt.Text, descripcionTxt.Text, (bool)Estado.IsChecked, (DateTime)fechVencimiento.SelectedDate, UsuarioBox.SelectedValue+"", ProyectoBox.SelectedValue+"");
             if (result)
             {
-                MessageBox.Show("Proyecto actualizado", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Tarea actualizado", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Information);
                 resetTable();
                 return;
             }
-            MessageBox.Show("Proyecto no actualizado, ha sucedido un error", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Tarea no actualizado, ha sucedido un error", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Warning);
 
 
         }
 
         private void CrearTarea(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("hola");
+            Models.Tarea result = tareaControlador.Crear(nombreTxt.Text, descripcionTxt.Text, (bool)Estado.IsChecked, (DateTime)fechVencimiento.SelectedDate, UsuarioBox.SelectedValue + "", ProyectoBox.SelectedValue + "");
+            if (result != null)
+            {
+                MessageBox.Show("Tarea creado", "Crear", MessageBoxButton.OK, MessageBoxImage.Information);
+                TareasDB.Add(result);
+                CleanInputs();
+                return;
+            }
+            MessageBox.Show("Tarea no creado, ha sucedido un error", "Crear", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void LimpiarInputs(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("hola");
+            CleanInputs();
         }
 
         private void CerrarVentana(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("hola");
+            this.Hide();
+            MainW.Show();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -93,12 +93,12 @@ namespace NexusCreativo.Models.Models.DAO
         public Tarea CrearTarea(Tarea tareaInputs)
         {
             Tarea tarea = new Tarea();
-            string query = "INSERT INTO Tareas (name, descripcion, isCompleted, period, usuarioId, proyectoId)\r\nVALUES (@name, @descripcion, @isCompleted, @period, @usuarioId, @proyectoId); SELECT LAST_INSERT_ID();";
+            string query = "INSERT INTO Tareas (nombre, descripcion, isCompleted, period, usuario_Id, proyecto_Id) VALUES (@nombre, @descripcion, @isCompleted, @period, @usuarioId, @proyectoId); SELECT LAST_INSERT_ID();";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@name", tareaInputs.Nombre);
+                    msCommand.Parameters.AddWithValue("@nombre", tareaInputs.Nombre);
                     msCommand.Parameters.AddWithValue("@descripcion", tareaInputs.Description);
                     msCommand.Parameters.AddWithValue("@isCompleted", tareaInputs.isCompleted);
                     msCommand.Parameters.AddWithValue("@period", tareaInputs.Period);
