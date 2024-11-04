@@ -15,6 +15,8 @@ namespace NexusCreativo.Controller
         public TareaC()
         {
             this.TareaDao = new TareaDAO();
+            this.ProyectoDao = new ProyectoDAO();
+            this.UsuarioDao = new UsuarioDAO();
         }
 
         public List<Models.Tarea> ObtenerTareas()
@@ -52,7 +54,7 @@ namespace NexusCreativo.Controller
             return false;
         }
 
-        public Boolean Actualizar(string id, string nombre, string descripcion, bool isCompleted, DateTime period, int usuarioId, int proyectoId)
+        public Boolean Actualizar(string id, string nombre, string descripcion, bool isCompleted, DateTime period, string usuarioId, string proyectoId)
         {
             if (id == null || id == "")
             {
@@ -63,11 +65,11 @@ namespace NexusCreativo.Controller
             {
                 return false;
             }
-            if (nombre != null && descripcion != null && nombre != "" && descripcion != "")
+            if (nombre == null && descripcion == null && nombre == "" && descripcion != "")
             {
                 return false;
             }
-            Models.Tarea tareaActualizada = new Models.Tarea(int.Parse(id), nombre, descripcion, isCompleted, period, UsuarioDao.GetUser(usuarioId), ProyectoDao.GetProject(proyectoId));
+            Models.Tarea tareaActualizada = new Models.Tarea(int.Parse(id), nombre, descripcion, isCompleted, period, UsuarioDao.GetUser(int.Parse(usuarioId)), ProyectoDao.GetProject(int.Parse(proyectoId)));
             Boolean result = TareaDao.ActualizarTarea(tareaActualizada);
             return true;
         }

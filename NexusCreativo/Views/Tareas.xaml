@@ -77,7 +77,7 @@
         </DataGrid>
         <Label Content="Usuario:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,215,0,0"/>
         <ComboBox x:Name="UsuarioBox"  Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"
-                  DisplayMemberPath="Nombre" SelectedValuePath="Id" 
+                  DisplayMemberPath="Name" SelectedValuePath="Id" 
                   ItemsSource="{Binding UsuarioDB}" Margin="9,242,0,0" Grid.RowSpan="3">
         </ComboBox>
         <Label Content="Proyecto:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,17,0,0" RenderTransformOrigin="0.013,0.637" Grid.Row="2"/>

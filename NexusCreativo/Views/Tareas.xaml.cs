@@ -89,7 +89,16 @@ namespace NexusCreativo.Views
 
         private void ActualizarTarea(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("hola");
+            Boolean result = tareaControlador.Actualizar(idTxt.Text, nombreTxt.Text, descripcionTxt.Text, (bool)Estado.IsChecked, (DateTime)fechVencimiento.SelectedDate, UsuarioBox.SelectedValue+"", ProyectoBox.SelectedValue+"");
+            if (result)
+            {
+                MessageBox.Show("Proyecto actualizado", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Information);
+                resetTable();
+                return;
+            }
+            MessageBox.Show("Proyecto no actualizado, ha sucedido un error", "Actualizar", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+
         }
 
         private void CrearTarea(object sender, RoutedEventArgs e)
@@ -109,7 +118,21 @@ namespace NexusCreativo.Views
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Console.WriteLine("hola");
+            if (sender is DataGrid dataGrid && dataGrid.SelectedItem is Tarea tareaSeleccionada)
+            {
+                int selectedId = tareaSeleccionada.Id;
+                Tarea tareaSelected = tareaControlador.ObtenerTareaById(selectedId.ToString());
+                idTxt.Text = tareaSelected.Id + "";
+                nombreTxt.Text = tareaSelected.Nombre;
+                descripcionTxt.Text = tareaSelected.Description;
+                UsuarioBox.SelectedValue = tareaSelected.Usuario.Id;
+                ProyectoBox.SelectedValue = tareaSelected.Proyecto.Id;
+                if (tareaSelected.isCompleted == true)
+                {
+                    Estado.IsChecked = true;
+                }
+                fechVencimiento.SelectedDate = tareaSeleccionada.Period;
+            }
         }
     }
 }

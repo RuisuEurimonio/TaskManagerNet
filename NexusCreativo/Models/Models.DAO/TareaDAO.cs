@@ -20,7 +20,7 @@ namespace NexusCreativo.Models.Models.DAO
         public Tarea ObtenerTarea(int id)
         {
             Tarea tarea = new Tarea();
-            string query = "SELECT t.id AS tareaId, t.nombre AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.name AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuarioId = u.id INNER JOIN Proyectos p ON t.proyectoId = p.id WHERE t.id = @tareaId";
+            string query = "SELECT t.id AS tareaId, t.nombre AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.nombre AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuario_id = u.id INNER JOIN Proyectos p ON t.proyecto_id = p.id WHERE t.id = "+id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
@@ -30,20 +30,20 @@ namespace NexusCreativo.Models.Models.DAO
                     {
                         while (msdr.Read())
                         {
-                            tarea.Id = msdr.GetInt32("id");
-                            tarea.Nombre = msdr.GetString("nombre");
-                            tarea.Description = msdr.GetString("descripcion");
+                            tarea.Id = msdr.GetInt32("tareaId");
+                            tarea.Nombre = msdr.GetString("tareaName");
+                            tarea.Description = msdr.GetString("tareaDescripcion");
                             tarea.isCompleted = msdr.GetBoolean("isCompleted");
                             tarea.Period = msdr.GetDateTime("period");
                             tarea.Usuario = new Usuario
                             {
-                                Id = msdr.GetInt32(msdr.GetOrdinal("usuarioId")),
-                                Name = msdr.GetString(msdr.GetOrdinal("usuarioName"))
+                                Id = msdr.GetInt32("usuarioId"),
+                                Name = msdr.GetString("usuarioName")
                             };
                             tarea.Proyecto = new Proyecto
                             {
-                                Id = msdr.GetInt32(msdr.GetOrdinal("proyectoId")),
-                                Nombre = msdr.GetString(msdr.GetOrdinal("proyectoName"))
+                                Id = msdr.GetInt32("proyectoId"),
+                                Nombre = msdr.GetString("proyectoName")
                             };
 
                         }
@@ -136,17 +136,17 @@ namespace NexusCreativo.Models.Models.DAO
 
         public Boolean ActualizarTarea(Tarea tarea)
         {
-            string query = "UPDATE Tareas SET nombre = @nombre, descripcion = @descripcion, isCompleted = @isCompleted, period = @period, usuarioId = @usuarioId, proyectoId = @proyectoId WHERE id = @tareaId; ";
+            string query = "UPDATE Tareas SET nombre = @nombre, descripcion = @descripcion, isCompleted = @isCompleted, period = @period, usuario_Id = @usuario_Id, proyecto_Id = @proyecto_Id WHERE id = @tareaId; ";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@name", tarea.Nombre);
+                    msCommand.Parameters.AddWithValue("@nombre", tarea.Nombre);
                     msCommand.Parameters.AddWithValue("@descripcion", tarea.Description);
                     msCommand.Parameters.AddWithValue("@isCompleted", tarea.isCompleted);
                     msCommand.Parameters.AddWithValue("@period", tarea.Period);
-                    msCommand.Parameters.AddWithValue("@usuarioId", tarea.Usuario.Id);
-                    msCommand.Parameters.AddWithValue("@proyectoId", tarea.Proyecto.Id);
+                    msCommand.Parameters.AddWithValue("@usuario_Id", tarea.Usuario.Id);
+                    msCommand.Parameters.AddWithValue("@proyecto_Id", tarea.Proyecto.Id);
                     msCommand.Parameters.AddWithValue("@tareaId", tarea.Id);
 
                     msc.Open();
