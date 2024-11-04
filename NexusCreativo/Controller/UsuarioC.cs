@@ -17,35 +17,35 @@ namespace NexusCreativo.Controller
             this.UsuarioDao = new UsuarioDAO();
         }
 
-        public List<Models.Usuario> getUsers()
+        public List<Models.Usuario> ObtenerUsuarios()
         {
-            return this.UsuarioDao.GetUsers();
+            return this.UsuarioDao.ObtenerUsuarios();
         }
 
-        public Models.Usuario getUserById(string id)
+        public Models.Usuario ObtenerUsuarioById(string id)
         {
-            return UsuarioDao.GetUser(int.Parse(id));   
+            return UsuarioDao.ObtenerUsuario(int.Parse(id));   
         }
 
-        public Models.Usuario Create(string name, string rol)
+        public Models.Usuario Crear(string name, string rol)
         {
             if(name != null && rol != null && name != "" && rol != "")
             {
-                Models.Usuario newUsuario = new Models.Usuario(name, rol);
-                Models.Usuario result = UsuarioDao.SetUsers(newUsuario);
-                if (result != null)
+                Models.Usuario nuevoUsuario = new Models.Usuario(name, rol);
+                Models.Usuario resultado = UsuarioDao.CrearUsuario(nuevoUsuario);
+                if (resultado != null)
                 {
-                    return result;
+                    return resultado;
                 }
             }
             return null;
         }
 
-        public Boolean Delete(string id)
+        public Boolean Eliminar(string id)
         {
             if(id != null || id != "")
             {
-                UsuarioDao.DeleteUsers(int.Parse(id));
+                UsuarioDao.EliminarUsuario(int.Parse(id));
                 return true;
             }
             return false;
@@ -55,11 +55,10 @@ namespace NexusCreativo.Controller
         {
             if (id == null || id == "")
             {
-                Console.WriteLine("hola");
                 return false;
             }
-            Models.Usuario userByUpdate = UsuarioDao.GetUser(int.Parse(id));
-            if (userByUpdate == null)
+            Models.Usuario usuarioPorActualizar = UsuarioDao.ObtenerUsuario(int.Parse(id));
+            if (usuarioPorActualizar == null)
             {
                 return false;
             }
@@ -67,8 +66,12 @@ namespace NexusCreativo.Controller
             {
                 return false;
             }
-            Models.Usuario usuarioUpdated = new Models.Usuario(int.Parse(id), name, rol);
-            Boolean result = UsuarioDao.UpdateUser(usuarioUpdated);
+            Models.Usuario usuarioActualizado = new Models.Usuario(int.Parse(id), name, rol);
+            Boolean resultado = UsuarioDao.ActualizarUsuario(usuarioActualizado);
+            if (!resultado)
+            {
+                return false;
+            }
             return true;        
         }
 

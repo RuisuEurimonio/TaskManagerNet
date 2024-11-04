@@ -13,35 +13,35 @@ namespace NexusCreativo.Controller
             this.ProyectoDao = new ProyectoDAO();
         }
 
-        public List<Models.Proyecto> getProjects()
+        public List<Models.Proyecto> ObtenerProyectos()
         {
-            return this.ProyectoDao.GetProjects();
+            return this.ProyectoDao.ObtenerProyectos();
         }
 
-        public Models.Proyecto getProjectById(string id)
+        public Models.Proyecto ObtenerProyectoById(string id)
         {
-            return ProyectoDao.GetProject(int.Parse(id));
+            return ProyectoDao.ObtenerProyecto(int.Parse(id));
         }
 
-        public Models.Proyecto Create(string name, string rol)
+        public Models.Proyecto Crear(string name, string rol)
         {
             if (name != null && rol != null && name != "" && rol != "")
             {
-                Models.Proyecto newProject = new Models.Proyecto(name, rol);
-                Models.Proyecto result = ProyectoDao.SetProjects(newProject);
-                if (result != null)
+                Models.Proyecto nuevoProyecto = new Models.Proyecto(name, rol);
+                Models.Proyecto resultado = ProyectoDao.CrearProyecto(nuevoProyecto);
+                if (resultado != null)
                 {
-                    return result;
+                    return resultado;
                 }
             }
             return null;
         }
 
-        public Boolean Delete(string id)
+        public Boolean Eliminar(string id)
         {
             if (id != null || id != "")
             {
-                ProyectoDao.DeleteProjects(int.Parse(id));
+                ProyectoDao.EliminarProyecto(int.Parse(id));
                 return true;
             }
             return false;
@@ -51,11 +51,10 @@ namespace NexusCreativo.Controller
         {
             if (id == null || id == "")
             {
-                Console.WriteLine("hola");
                 return false;
             }
-            Models.Proyecto proyectoByUpdate = ProyectoDao.GetProject(int.Parse(id));
-            if (proyectoByUpdate == null)
+            Models.Proyecto proyectoParaActualizar = ProyectoDao.ObtenerProyecto(int.Parse(id));
+            if (proyectoParaActualizar == null)
             {
                 return false;
             }
@@ -63,8 +62,12 @@ namespace NexusCreativo.Controller
             {
                 return false;
             }
-            Models.Proyecto proyectoUpdated = new Models.Proyecto(int.Parse(id), name, rol);
-            Boolean result = ProyectoDao.UpdateProjects(proyectoUpdated);
+            Models.Proyecto proyectoActualizado = new Models.Proyecto(int.Parse(id), name, rol);
+            Boolean resultado = ProyectoDao.ActualizarProyecto(proyectoActualizado);
+            if(!resultado)
+            {
+                return false;
+            }
             return true;
         }
     }

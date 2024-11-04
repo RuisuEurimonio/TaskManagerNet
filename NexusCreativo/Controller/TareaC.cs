@@ -34,17 +34,17 @@ namespace NexusCreativo.Controller
             if (nombre != null && descripcion != null && nombre != "" && descripcion != "")
             {
 
-                Models.Tarea nuevaTarea = new Models.Tarea(nombre, descripcion, isCompleted, period, UsuarioDao.GetUser(int.Parse(usuarioId)), ProyectoDao.GetProject(int.Parse(proyectoId)));
-                Models.Tarea result = TareaDao.CrearTarea(nuevaTarea);
-                if (result != null)
+                Models.Tarea nuevaTarea = new Models.Tarea(nombre, descripcion, isCompleted, period, UsuarioDao.ObtenerUsuario(int.Parse(usuarioId)), ProyectoDao.ObtenerProyecto(int.Parse(proyectoId)));
+                Models.Tarea resultado = TareaDao.CrearTarea(nuevaTarea);
+                if (resultado != null)
                 {
-                    return result;
+                    return resultado;
                 }
             }
             return null;
         }
 
-        public Boolean Delete(string id)
+        public Boolean Eliminar(string id)
         {
             if (id != null || id != "")
             {
@@ -69,8 +69,12 @@ namespace NexusCreativo.Controller
             {
                 return false;
             }
-            Models.Tarea tareaActualizada = new Models.Tarea(int.Parse(id), nombre, descripcion, isCompleted, period, UsuarioDao.GetUser(int.Parse(usuarioId)), ProyectoDao.GetProject(int.Parse(proyectoId)));
+            Models.Tarea tareaActualizada = new Models.Tarea(int.Parse(id), nombre, descripcion, isCompleted, period, UsuarioDao.ObtenerUsuario(int.Parse(usuarioId)), ProyectoDao.ObtenerProyecto(int.Parse(proyectoId)));
             Boolean result = TareaDao.ActualizarTarea(tareaActualizada);
+            if (!result)
+            {
+                return false;
+            }
             return true;
         }
 

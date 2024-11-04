@@ -39,12 +39,12 @@ namespace NexusCreativo
 
         private void CargarDatos()
         {
-            this.UsuariosDB = new ObservableCollection<Usuario>(UsuarioController.getUsers());
+            this.UsuariosDB = new ObservableCollection<Usuario>(UsuarioController.ObtenerUsuarios());
         }
 
         private void Create(object sender, RoutedEventArgs e)
         {
-            Models.Usuario result = UsuarioController.Create(nameTxt.Text, rolTxt.Text);
+            Models.Usuario result = UsuarioController.Crear(nameTxt.Text, rolTxt.Text);
             if (result != null)
             {
                 MessageBox.Show("Usuario creado", "Crear", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -58,7 +58,7 @@ namespace NexusCreativo
         private void Delete(object sender, RoutedEventArgs e)
         {
             var usuarioAEliminar = UsuariosDB.FirstOrDefault(u => u.Id == int.Parse(idTxt.Text));
-            Boolean result = UsuarioController.Delete(idTxt.Text);
+            Boolean result = UsuarioController.Eliminar(idTxt.Text);
             if (result)
             {
                 MessageBox.Show("Usuario eliminado", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -93,7 +93,7 @@ namespace NexusCreativo
             if (sender is DataGrid dataGrid && dataGrid.SelectedItem is Usuario selectedUser)
             {
                 int selectedId = selectedUser.Id;
-                Usuario usuarioSelected = UsuarioController.getUserById(selectedId.ToString());
+                Usuario usuarioSelected = UsuarioController.ObtenerUsuarioById(selectedId.ToString());
                 idTxt.Text = usuarioSelected.Id + "";
                 nameTxt.Text = usuarioSelected.Name;
                 rolTxt.Text = usuarioSelected.Rol;
@@ -116,7 +116,7 @@ namespace NexusCreativo
         private void resetTable()
         {
             UsuariosDB.Clear();
-            foreach (var item in UsuarioController.getUsers())
+            foreach (var item in UsuarioController.ObtenerUsuarios())
             {
                 UsuariosDB.Add(item);
             };

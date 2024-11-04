@@ -14,7 +14,7 @@ namespace NexusCreativo.Models.Models.DAO
 
         string connectDB = "server=localhost; user=nexus; database=nexus; password=nexus; port=3307";
 
-        public Proyecto GetProject(int id)
+        public Proyecto ObtenerProyecto(int id)
         {
             Proyecto proyecto = new Proyecto();
             string query = "SELECT * FROM proyectos WHERE ID = " + id;
@@ -37,9 +37,9 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public List<Proyecto> GetProjects()
+        public List<Proyecto> ObtenerProyectos()
         {
-            List<Proyecto> listProjects = new List<Proyecto>();
+            List<Proyecto> listaDeProyectos = new List<Proyecto>();
             string query = "SELECT * FROM proyectos";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
@@ -54,15 +54,15 @@ namespace NexusCreativo.Models.Models.DAO
                             proyecto.Id = msdr.GetInt32("id");
                             proyecto.Nombre = msdr.GetString("Nombre");
                             proyecto.Description = msdr.GetString("descripcion");
-                            listProjects.Add(proyecto);
+                            listaDeProyectos.Add(proyecto);
                         }
                     }
-                    return listProjects;
+                    return listaDeProyectos;
                 }
             }
         }
 
-        public Proyecto SetProjects(Proyecto proyecto)
+        public Proyecto CrearProyecto(Proyecto proyecto)
         {
             string query = "INSERT INTO proyectos (nombre, descripcion) VALUES (@nombre, @descripcion); SELECT LAST_INSERT_ID();";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
@@ -76,14 +76,14 @@ namespace NexusCreativo.Models.Models.DAO
                     object result = msCommand.ExecuteScalar();
                     if (result != null)
                     {
-                        return GetProject(Convert.ToInt32(result));
+                        return ObtenerProyecto(Convert.ToInt32(result));
                     }
                 }
                 return null;
             }
         }
 
-        public Boolean DeleteProjects(int id)
+        public Boolean EliminarProyecto(int id)
         {
             string query = "DELETE FROM proyectos WHERE id = " + id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
@@ -101,15 +101,15 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Boolean UpdateProjects(Proyecto project)
+        public Boolean ActualizarProyecto(Proyecto proyecto)
         {
-            string query = "UPDATE proyectos SET nombre = @nombre, descripcion = @descripcion WHERE id = " + project.Id;
+            string query = "UPDATE proyectos SET nombre = @nombre, descripcion = @descripcion WHERE id = " + proyecto.Id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
                 using (MySqlCommand msCommand = new MySqlCommand(query, msc))
                 {
-                    msCommand.Parameters.AddWithValue("@nombre", project.Nombre);
-                    msCommand.Parameters.AddWithValue("@descripcion", project.Description);
+                    msCommand.Parameters.AddWithValue("@nombre", proyecto.Nombre);
+                    msCommand.Parameters.AddWithValue("@descripcion", proyecto.Description);
 
                     msc.Open();
                     int result = msCommand.ExecuteNonQuery();

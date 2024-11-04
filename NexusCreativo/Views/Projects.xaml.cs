@@ -43,13 +43,13 @@ namespace NexusCreativo.Views
 
         private void CargarDatos()
         {
-            ProyectosDB = new ObservableCollection<Proyecto>(proyectoController.getProjects());
+            ProyectosDB = new ObservableCollection<Proyecto>(proyectoController.ObtenerProyectos());
         }
 
         private void DeleteProject(object sender, RoutedEventArgs e)
         {
             var proyectoAEliminar = ProyectosDB.FirstOrDefault(u => u.Id == int.Parse(idTxt.Text));
-            Boolean result = proyectoController.Delete(idTxt.Text);
+            Boolean result = proyectoController.Eliminar(idTxt.Text);
             if (result)
             {
                 MessageBox.Show("Proyecto eliminado", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -83,7 +83,7 @@ namespace NexusCreativo.Views
         private void resetTable()
         {
             ProyectosDB.Clear();
-            foreach (var item in proyectoController.getProjects())
+            foreach (var item in proyectoController.ObtenerProyectos())
             {
                 ProyectosDB.Add(item);
             };
@@ -92,7 +92,7 @@ namespace NexusCreativo.Views
 
         private void CreateProject(object sender, RoutedEventArgs e)
         {
-            Models.Proyecto result = proyectoController.Create(projectTxt.Text, descriptionTxt.Text);
+            Models.Proyecto result = proyectoController.Crear(projectTxt.Text, descriptionTxt.Text);
             if (result != null)
             {
                 MessageBox.Show("Proyecto creado", "Crear", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -108,7 +108,7 @@ namespace NexusCreativo.Views
             if (sender is DataGrid dataGrid && dataGrid.SelectedItem is Proyecto selectedProject)
             {
                 int selectedId = selectedProject.Id;
-                Proyecto proyectSelected = proyectoController.getProjectById(selectedId.ToString());
+                Proyecto proyectSelected = proyectoController.ObtenerProyectoById(selectedId.ToString());
                 idTxt.Text = proyectSelected.Id + "";
                 projectTxt.Text = proyectSelected.Nombre;
                 descriptionTxt.Text = proyectSelected.Description;

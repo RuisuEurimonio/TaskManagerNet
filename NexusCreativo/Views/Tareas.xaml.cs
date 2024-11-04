@@ -50,14 +50,14 @@ namespace NexusCreativo.Views
         private void CargarDatos()
         {
             TareasDB = new ObservableCollection<Tarea>(tareaControlador.ObtenerTareas());
-            UsuarioDB = new ObservableCollection<Usuario>(usuarioControlador.getUsers());
-            ProyectosDB = new ObservableCollection<Proyecto>(proyectoControlador.getProjects());
+            UsuarioDB = new ObservableCollection<Usuario>(usuarioControlador.ObtenerUsuarios());
+            ProyectosDB = new ObservableCollection<Proyecto>(proyectoControlador.ObtenerProyectos());
         }
 
         private void EliminarTarea(object sender, RoutedEventArgs e)
         {
             var tareaAEliminar = TareasDB.FirstOrDefault(u => u.Id == int.Parse(idTxt.Text));
-            Boolean result = tareaControlador.Delete(idTxt.Text);
+            Boolean result = tareaControlador.Eliminar(idTxt.Text);
             if (result)
             {
                 MessageBox.Show("Tarea eliminada", "Eliminar", MessageBoxButton.OK, MessageBoxImage.Information);

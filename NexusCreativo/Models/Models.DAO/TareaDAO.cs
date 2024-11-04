@@ -55,7 +55,7 @@ namespace NexusCreativo.Models.Models.DAO
 
         public List<Tarea> ObtenerTareas()
         {
-            List<Tarea> listTasks = new List<Tarea>();
+            List<Tarea> listaTareas = new List<Tarea>();
             string query = "SELECT t.id AS tareaId, t.nombre AS tareaName, t.descripcion AS tareaDescripcion, t.isCompleted, t.period, u.id AS usuarioId, u.name AS usuarioName, p.id AS proyectoId, p.nombre AS proyectoName FROM Tareas t INNER JOIN Usuarios u ON t.usuario_id = u.id INNER JOIN Proyectos p ON t.proyecto_id = p.id";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
@@ -82,10 +82,10 @@ namespace NexusCreativo.Models.Models.DAO
                                 Id = msdr.GetInt32(msdr.GetOrdinal("proyectoId")),
                                 Nombre = msdr.GetString(msdr.GetOrdinal("proyectoName"))
                             };
-                            listTasks.Add(tarea);
+                            listaTareas.Add(tarea);
                         }
                     }
-                    return listTasks;
+                    return listaTareas;
                 }
             }
         }
@@ -106,10 +106,10 @@ namespace NexusCreativo.Models.Models.DAO
                     msCommand.Parameters.AddWithValue("@proyectoId", tareaInputs.Proyecto.Id);
 
                     msc.Open();
-                    object result = msCommand.ExecuteScalar();
-                    if (result != null)
+                    object resultado = msCommand.ExecuteScalar();
+                    if (resultado != null)
                     {
-                        return ObtenerTarea(Convert.ToInt32(result));
+                        return ObtenerTarea(Convert.ToInt32(resultado));
                     }
                 }
                 return null;

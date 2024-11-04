@@ -13,7 +13,7 @@ namespace NexusCreativo.Models.Models.DAO
        
         string connectDB = "server=localhost; user=nexus; database=nexus; password=nexus; port=3307";
 
-        public Usuario GetUser(int id)
+        public Usuario ObtenerUsuario(int id)
         {
             Usuario usuario = new Usuario();
             string query = "SELECT * FROM usuarios WHERE ID = " + id;
@@ -36,9 +36,9 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public List<Usuario> GetUsers()
+        public List<Usuario> ObtenerUsuarios()
         {
-            List<Usuario> listUsers = new List<Usuario> ();
+            List<Usuario> listaUsuarios = new List<Usuario> ();
             string query = "SELECT * FROM usuarios";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
             {
@@ -53,16 +53,16 @@ namespace NexusCreativo.Models.Models.DAO
                             usuario.Id = msdr.GetInt32("id");
                             usuario.Name = msdr.GetString("name");
                             usuario.Rol = msdr.GetString("rol");
-                            listUsers.Add(usuario);
+                            listaUsuarios.Add(usuario);
                         }
                     }
                     Console.WriteLine("Consulta realizada");
-                    return listUsers;
+                    return listaUsuarios;
                 }
             }
         }
 
-        public Usuario SetUsers(Usuario usuario)
+        public Usuario CrearUsuario(Usuario usuario)
         {
             string query = "INSERT INTO usuarios (name, rol) VALUES (@name, @rol); SELECT LAST_INSERT_ID();";
             using (MySqlConnection msc = new MySqlConnection(connectDB))
@@ -76,14 +76,14 @@ namespace NexusCreativo.Models.Models.DAO
                     object result = msCommand.ExecuteScalar();
                     if(result != null)
                     {
-                        return GetUser(Convert.ToInt32(result));
+                        return ObtenerUsuario(Convert.ToInt32(result));
                     }
                 }
                 return null;
             }
         }
 
-        public Boolean DeleteUsers(int id)
+        public Boolean EliminarUsuario(int id)
         {
             string query = "DELETE FROM usuarios WHERE id = "+ id;
             using (MySqlConnection msc = new MySqlConnection(connectDB))
@@ -101,7 +101,7 @@ namespace NexusCreativo.Models.Models.DAO
             }
         }
 
-        public Boolean UpdateUser(Usuario usuario)
+        public Boolean ActualizarUsuario(Usuario usuario)
         {
             List<Usuario> listUsers = new List<Usuario>();
             string query = "UPDATE usuarios SET name = @name, rol = @rol WHERE id = " + usuario.Id;
